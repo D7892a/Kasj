@@ -2027,6 +2027,58 @@
         } catch (e) { console.warn('تعذر تحميل البيانات المحفوظة', e); }
     }
 
+    /* --- تنظيف وتوحيد البيانات (إصلاح المعرّفات المفقودة/المكررة) --- */
+    function makeProductId(existingIds) {
+        const taken = existingIds instanceof Set
+            ? existingIds
+            : new Set(AppState.products.map(p => Number(p.id)));
+        let id;
+        do {
+            id = Date.now() + Math.floor(Math.random() * 1000000);
+        } while (taken.has(id));
+        return id;
+    }
+
+    function getProductById(productId) {
+        return AppState.products.find(p => String(p.id) === String(productId));
+    }
+
+    function normalizeAppData() {
+        const idMap = {}; // المعرّف القديم -> الجديد
+        const taken = new Set();
+        AppState.products = (AppState.products || []).map(p => {
+            const np = Object.assign({}, p);
+            np.name = String(np.name || 'مادة');
+            np.code = String(np.code || '');
+            np.category = np.category || '';
+            np.buyPrice = Number(np.buyPrice) || 0;
+            np.wholesalePrice = Number(np.wholesalePrice) || 0;
+            np.retailPrice = Number(np.retailPrice) || 0;
+            np.qty = Number(np.qty) || 0;
+            np.cartonPieces = Number(np.cartonPieces) || 1;
+            return np;
+        });
+        AppState.products.forEach(p => {
+            const numId = Number(p.id);
+            const valid = p.id !== undefined && p.id !== null && String(p.id).trim() !== '' && isFinite(numId);
+            if (!valid || taken.has(numId)) {
+                const oldId = p.id;
+                p.id = makeProductId(taken);
+                taken.add(p.id);
+                if (oldId !== undefined) idMap[String(oldId)] = p.id;
+            } else {
+                p.id = numId;
+                taken.add(numId);
+            }
+        });
+        // تحديث سلة الكاشير والفواتير المعلقة لتطابق المعرّفات الجديدة
+        const remapItems = arr => (arr || []).forEach(it => {
+            if (it && it.id !== undefined && idMap[String(it.id)] !== undefined) it.id = idMap[String(it.id)];
+        });
+        remapItems(AppState.cashierCart);
+        (AppState.heldInvoices || []).forEach(h => remapItems(h.cart));
+    }
+
     function resetAllData() {
         if (!confirm('سيتم حذف كل البيانات المحفوظة في هذا المتصفح وإرجاع النظام للبيانات الافتراضية. هل أنت متأكد؟')) return;
         localStorage.removeItem(STORAGE_KEY);
@@ -2036,6 +2088,8 @@
     /* --- التهيئة عند تحميل الصفحة --- */
     window.onload = function () {
         loadState();
+        normalizeAppData(); // إصلاح المعرّفات المفقودة أو المكررة في البيانات القديمة
+        saveState();
         document.getElementById('cashierCurrentDate').innerText = new Date().toLocaleDateString('ar-IQ');
         document.getElementById('dailyIncomeDate').value = new Date().toISOString().split('T')[0];
         applyStoredThemes();
@@ -2207,14 +2261,14 @@
     }
 
     function addToCashierCart(productId) {
-        const p = AppState.products.find(x => x.id === productId);
+        const p = getProductById(productId);
         if (!p) return;
         if (p.qty <= 0) {
             showNotification('تنبيه: هذه المادة نفدت من المخزن!');
             return;
         }
 
-        const existing = AppState.cashierCart.find(x => x.id === productId);
+        const existing = AppState.cashierCart.find(x => String(x.id) === String(p.id));
         if (existing) {
             existing.qty += 1;
         } else {
@@ -2326,7 +2380,7 @@
             subtotal += itTot;
 
             // إنقاص المخزون
-            const orig = AppState.products.find(p => p.id === it.id);
+            const orig = getProductById(it.id);
             if (orig) orig.qty = Math.max(0, orig.qty - it.qty);
 
             return {
@@ -2379,8 +2433,46 @@
     }
 
     function printCurrentCashierInvoice() {
+        // إذا السلة الحالية فيها مواد: نطبع الفاتورة الحالية (قبل أو بعد الحفظ)
+        if (AppState.cashierCart.length > 0) {
+            const saleType = document.getElementById('cashierSaleType').value;
+            const payType = document.getElementById('cashierPaymentType').value;
+            const custName = document.getElementById('cashierCustomerName').value.trim() || 'زبون عام';
+            const discount = Number(document.getElementById('cashierDiscount').value) || 0;
+            const delivery = Number(document.getElementById('cashierDelivery').value) || 0;
+            const paid = Number(document.getElementById('cashierPaid').value) || 0;
+
+            let subtotal = 0;
+            const items = AppState.cashierCart.map(it => {
+                const unitPrice = saleType === 'wholesale' ? Number(it.wholesalePrice) || 0 : Number(it.retailPrice) || 0;
+                const qty = Number(it.qty) || 0;
+                const itTot = unitPrice * qty;
+                subtotal += itTot;
+                return { name: it.name, price: unitPrice, qty: qty, total: itTot, buyPrice: it.buyPrice };
+            });
+            const grandTotal = Math.max(0, subtotal - discount + delivery);
+            const remaining = Math.max(0, grandTotal - paid);
+
+            openInvoicePrintModal({
+                invoiceNum: AppState.sales.length + 1,
+                customer: custName,
+                customerPhone: '-',
+                saleType: saleType === 'wholesale' ? 'جملة' : 'مفرد',
+                payType: payType === 'debt' ? 'دين' : 'كاش',
+                discount: discount,
+                delivery: delivery,
+                paid: paid,
+                remaining: remaining,
+                total: grandTotal,
+                user: AppState.currentUser,
+                date: new Date().toISOString().replace('T', ' ').substring(0, 19),
+                items: items
+            });
+            return;
+        }
+        // السلة فارغة: نطبع آخر فاتورة محفوظة
         if (AppState.sales.length === 0) {
-            showNotification('لا توجد فواتير سابقة للطباعة!');
+            showNotification('سلة الفاتورة فارغة ولا توجد فواتير محفوظة للطباعة!');
             return;
         }
         openInvoicePrintModal(AppState.sales[0]);
@@ -2464,8 +2556,8 @@
     }
 
     function addInvItemFromSelect() {
-        const pId = Number(document.getElementById('invItemSelect').value);
-        const p = AppState.products.find(x => x.id === pId);
+        const pId = document.getElementById('invItemSelect').value;
+        const p = getProductById(pId);
         if (p) addManualInvItem(p);
     }
 
@@ -2557,7 +2649,7 @@
         if (isPurchase) {
             // إضافة للمشتريات وتحديث المخزون بالزيادة
             currentManualItems.forEach(it => {
-                const prod = AppState.products.find(p => p.id === it.id);
+                const prod = getProductById(it.id);
                 if (prod) {
                     prod.qty += it.qty;
                     prod.buyPrice = it.price;
@@ -2580,7 +2672,7 @@
         } else {
             // بيع وإنقاص المخزون
             currentManualItems.forEach(it => {
-                const prod = AppState.products.find(p => p.id === it.id);
+                const prod = getProductById(it.id);
                 if (prod) prod.qty = Math.max(0, prod.qty - it.qty);
             });
             AppState.sales.unshift({
@@ -2692,7 +2784,7 @@
             return;
         }
         const qty = Number(document.getElementById('quickAddStockQty').value) || 10;
-        const p = AppState.products.find(x => x.id === AppState.selectedProductId);
+        const p = getProductById(AppState.selectedProductId);
         if (p) {
             p.qty += qty;
             renderInventoryTable();
@@ -2756,7 +2848,7 @@
         }
 
         if (id) {
-            const p = AppState.products.find(x => x.id === Number(id));
+            const p = getProductById(id);
             if (p) {
                 p.code = code; p.name = name; p.category = cat;
                 p.buyPrice = buy; p.wholesalePrice = wholesale;
@@ -2765,7 +2857,7 @@
             }
         } else {
             AppState.products.push({
-                id: Date.now(),
+                id: makeProductId(),
                 code: code,
                 name: name,
                 category: cat,
