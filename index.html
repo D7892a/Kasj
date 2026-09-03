@@ -1981,6 +1981,7 @@
         // سلة الكاشير المؤقتة
         cashierCart: [],
         heldInvoices: [],
+        loggedIn: false,
         selectedProductId: null,
         selectedSaleIndex: null
     };
@@ -2001,6 +2002,7 @@
                 users: AppState.users,
                 cashierCart: AppState.cashierCart,
                 heldInvoices: AppState.heldInvoices,
+                loggedIn: AppState.loggedIn,
                 config: AppState.config
             }));
         } catch (e) { console.warn('تعذر حفظ البيانات محلياً', e); }
@@ -2011,7 +2013,7 @@
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) return;
             const saved = JSON.parse(raw);
-            ['currentUser','categories','products','sales','purchases','expenses','persons','users','cashierCart','heldInvoices','config'].forEach(k => {
+            ['currentUser','categories','products','sales','purchases','expenses','persons','users','cashierCart','heldInvoices','loggedIn','config'].forEach(k => {
                 if (saved[k] !== undefined) AppState[k] = saved[k];
             });
             AppState.config = Object.assign({
@@ -2090,6 +2092,16 @@
         loadState();
         normalizeAppData(); // إصلاح المعرّفات المفقودة أو المكررة في البيانات القديمة
         saveState();
+        // إذا المستخدم مسجّل دخول سابقاً: ندخله مباشرة بدون شاشة كلمة المرور
+        if (AppState.loggedIn && AppState.currentUser) {
+            const user = AppState.users.find(x => x.username === AppState.currentUser);
+            if (user) {
+                document.getElementById('cashierUserName').innerText = user.username;
+                goToScreen('screen-home');
+            } else {
+                AppState.loggedIn = false;
+            }
+        }
         document.getElementById('cashierCurrentDate').innerText = new Date().toLocaleDateString('ar-IQ');
         document.getElementById('dailyIncomeDate').value = new Date().toISOString().split('T')[0];
         applyStoredThemes();
@@ -2132,6 +2144,7 @@
         const user = AppState.users.find(x => x.username === u && x.pass === p);
         if (user) {
             AppState.currentUser = user.username;
+            AppState.loggedIn = true;
             document.getElementById('cashierUserName').innerText = user.username;
             goToScreen('screen-home');
             saveState();
@@ -2141,6 +2154,8 @@
     }
 
     function logout() {
+        AppState.loggedIn = false;
+        saveState();
         goToScreen('screen-login');
     }
 
