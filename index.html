@@ -641,6 +641,126 @@
             font-size: 12.5px;
         }
 
+        /* ================= قوالب الفاتورة (كلاسيكي / حديث / بسيط / إيصال) ================= */
+        .invoice-print-container { font-size: calc(13px * var(--inv-font-scale, 1)); }
+        .invoice-print-container .invoice-table td, .invoice-print-container .invoice-table th,
+        .invoice-print-container .invoice-meta-grid, .invoice-print-container .invoice-sub,
+        .invoice-print-container .invoice-totals-table td { font-size: inherit; }
+
+        /* قالب حديث */
+        .tpl-modern .invoice-header-box {
+            border: none; border-radius: 0;
+            border-bottom: 4px solid var(--inv-border);
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        }
+        .tpl-modern .invoice-title { font-size: 1.9em; letter-spacing: 1px; }
+        .tpl-modern .invoice-meta-grid {
+            border: none; border-radius: 8px; background: var(--inv-title-bg);
+        }
+        .tpl-modern .invoice-table th {
+            background: var(--inv-border); color: #fff; border-color: var(--inv-border);
+        }
+        .tpl-modern .invoice-table td { border-left: none; border-right: none; }
+        .tpl-modern .invoice-totals-table { border-radius: 8px; overflow: hidden; }
+
+        /* قالب بسيط */
+        .tpl-simple .invoice-header-box {
+            background: #fff; border: none; border-bottom: 2px solid #111; border-radius: 0;
+        }
+        .tpl-simple .invoice-meta-grid {
+            background: #fff; border: none; border-top: 1px dashed #999; border-bottom: 1px dashed #999; border-radius: 0;
+        }
+        .tpl-simple .invoice-table th {
+            background: #fff; border: none; border-bottom: 2px solid #111; text-align: center;
+        }
+        .tpl-simple .invoice-table td { border: none; border-bottom: 1px solid #ddd; }
+        .tpl-simple .invoice-totals-table { background: #fff; }
+        .tpl-simple .invoice-totals-table td { border: none; padding: 4px 10px; }
+        .tpl-simple .invoice-totals-table tr:last-child td { border-top: 2px solid #111; }
+
+        /* قالب إيصال (مناسب للحراري) */
+        .tpl-thermal { padding: 12px 10px; font-size: calc(11.5px * var(--inv-font-scale, 1)); }
+        .tpl-thermal .invoice-header-box {
+            background: #fff; border: none; border-radius: 0;
+            border-bottom: 1px dashed #000; padding: 6px 0 10px;
+        }
+        .tpl-thermal .invoice-title { font-size: 1.5em; }
+        .tpl-thermal .invoice-meta-grid {
+            grid-template-columns: 1fr 1fr; background: #fff; border: none;
+            border-bottom: 1px dashed #000; border-radius: 0; padding: 6px 0; gap: 4px;
+        }
+        .tpl-thermal .invoice-table th, .tpl-thermal .invoice-table td { border: none; padding: 3px 2px; }
+        .tpl-thermal .invoice-table thead th { border-bottom: 1px dashed #000; }
+        .tpl-thermal .invoice-table tbody tr:last-child td { border-bottom: 1px dashed #000; }
+        .tpl-thermal .invoice-footer-grid { grid-template-columns: 1fr; }
+        .tpl-thermal .invoice-totals-table { background: #fff; }
+        .tpl-thermal .invoice-totals-table td { border: none; padding: 3px 6px; }
+        .tpl-thermal .invoice-totals-table tr:last-child td { border-top: 1px dashed #000; font-size: 1.15em; }
+
+        /* مقاسات الورق في المعاينة */
+        .invoice-print-container.paper-a4 { max-width: 800px; }
+        .invoice-print-container.paper-a5 { max-width: 560px; font-size: calc(12px * var(--inv-font-scale, 1)); }
+        .invoice-print-container.paper-thermal80 { max-width: 320px; padding: 12px 10px; font-size: calc(11px * var(--inv-font-scale, 1)); }
+        .invoice-print-container.paper-thermal80 .invoice-footer-grid { grid-template-columns: 1fr; }
+        .invoice-print-container.paper-thermal80 .invoice-meta-grid { grid-template-columns: 1fr 1fr; }
+
+        /* شريط خيارات الطباعة داخل مودال المعاينة */
+        .print-toolbar {
+            background: #fff; border: 1px solid #dbe4ee; border-radius: 10px;
+            padding: 10px 14px; margin-bottom: 14px;
+            display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end;
+        }
+        .print-toolbar .ptool { display: flex; flex-direction: column; gap: 3px; }
+        .print-toolbar .ptool label { font-size: 11px; font-weight: 800; color: #334155; }
+        .print-toolbar select, .print-toolbar input[type="range"] {
+            border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 8px; font-size: 12px; background: #f8fafc;
+        }
+        .print-toolbar .ptool-checks { display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 430px; }
+        .print-toolbar .ptool-checks label {
+            font-size: 11.5px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 4px; cursor: pointer;
+        }
+        .tpl-chip {
+            border: 1.5px solid #cbd5e1; background: #f8fafc; border-radius: 6px;
+            padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer;
+        }
+        .tpl-chip.active { border-color: #2563eb; background: #dbeafe; color: #1d4ed8; }
+
+        /* ================= شاشة الإعدادات ================= */
+        .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto; }
+        .settings-card {
+            background: #fff; border: 1px solid #dbe4ee; border-radius: 12px; padding: 18px;
+            box-shadow: 0 1px 4px rgba(15, 42, 90, .06);
+        }
+        .settings-card h3 { margin: 0 0 12px; font-size: 16px; color: #0b2f54; display: flex; align-items: center; gap: 8px; }
+        .settings-card h3 i { color: #2563eb; }
+        .sform-row { margin-bottom: 10px; }
+        .sform-row label { display: block; font-size: 12px; font-weight: 800; color: #334155; margin-bottom: 4px; }
+        .sform-row input[type="text"], .sform-row textarea, .sform-row select {
+            width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 7px 9px; font-size: 13px; box-sizing: border-box;
+        }
+        .sform-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .sform-checks label { font-size: 12.5px; font-weight: 700; display: flex; gap: 6px; align-items: center; cursor: pointer; }
+        .color-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .color-row input[type="color"] { width: 100%; height: 38px; padding: 2px; border: 1px solid #cbd5e1; border-radius: 6px; }
+
+        /* ================= شاشة التقارير والأرباح ================= */
+        .report-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .stat-card {
+            background: #fff; border: 1px solid #dbe4ee; border-left: 5px solid #2563eb;
+            border-radius: 10px; padding: 12px 14px; box-shadow: 0 1px 3px rgba(15,42,90,.05);
+        }
+        .stat-card .stat-label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 4px; }
+        .stat-card .stat-value { font-size: 17px; font-weight: 800; color: #0b2f54; }
+        .stat-card.green { border-left-color: #16a34a; }
+        .stat-card.red { border-left-color: #dc2626; }
+        .stat-card.gold { border-left-color: #d97706; }
+        .period-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .period-tab {
+            border: 1.5px solid #cbd5e1; background: #fff; border-radius: 20px;
+            padding: 6px 16px; font-weight: 700; font-size: 13px; cursor: pointer;
+        }
+        .period-tab.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+
         /* الحاسبة الافتراضية المدمجة */
         .calc-grid {
             display: grid;
@@ -683,11 +803,8 @@
             .sub-nav-bar { flex-direction: column; align-items: stretch; }
         }
 
-        /* ================= تخصيصات الطباعة (مقاس A4 مضبوط) ================= */
-        @page {
-            size: A4 portrait;
-            margin: 10mm;
-        }
+        /* ================= تخصيصات الطباعة (القياس يتغير ديناميكياً من الإعدادات) ================= */
+        #inventory-print-area { page: inventoryList; }
         @media print {
             html, body {
                 width: 210mm;
@@ -750,6 +867,8 @@
             .no-print { display: none !important; }
         }
     </style>
+    <!-- أنماط الطباعة الديناميكية (تتحدث بحسب قياس الورق والخيارات) -->
+    <style id="dynPrintStyle"></style>
 </head>
 <body>
 
@@ -876,6 +995,18 @@
                 <i class="fas fa-calculator"></i>
                 <h3>الحاسبة</h3>
                 <p>حاسبة ويندوز</p>
+            </div>
+
+            <!-- الصف الجديد: الأرباح والإعدادات -->
+            <div class="home-card" onclick="goToScreen('screen-reports')" style="border: 2px solid #f59e0b;">
+                <i class="fas fa-coins" style="color:#d97706;"></i>
+                <h3>الأرباح والتقارير</h3>
+                <p>أرباح يومية وشهرية وأفضل المواد</p>
+            </div>
+            <div class="home-card" onclick="goToScreen('screen-settings')" style="border: 2px solid #2563eb;">
+                <i class="fas fa-sliders-h" style="color:#2563eb;"></i>
+                <h3>الإعدادات</h3>
+                <p>تخصيص الورقة والطباعة والنظام</p>
             </div>
         </div>
     </div>
@@ -1468,6 +1599,168 @@
             </table>
         </div>
     </div>
+
+    <!-- ================= 13. شاشة الأرباح والتقارير ================= -->
+    <div class="screen-view" id="screen-reports">
+        <div class="sub-nav-bar">
+            <div class="nav-right">
+                <button class="btn" onclick="goToScreen('screen-home')"><i class="fas fa-arrow-right"></i> رجوع</button>
+                <h3 style="margin:0;"><i class="fas fa-coins"></i> الأرباح والتقارير</h3>
+            </div>
+            <div class="nav-left">
+                <div class="period-tabs" style="margin:0;">
+                    <button class="period-tab" onclick="renderReportsScreen('today')">اليوم</button>
+                    <button class="period-tab" onclick="renderReportsScreen('week')">أسبوع</button>
+                    <button class="period-tab" onclick="renderReportsScreen('month')">شهر</button>
+                    <button class="period-tab active" onclick="renderReportsScreen('all')">الكل</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-stats">
+            <div class="stat-card"><div class="stat-label">عدد الفواتير</div><div class="stat-value" id="rpInvCount">0</div></div>
+            <div class="stat-card"><div class="stat-label">إجمالي المبيعات</div><div class="stat-value" id="rpTotalSales">0</div></div>
+            <div class="stat-card"><div class="stat-label">المقبوض كاش</div><div class="stat-value" id="rpTotalCash">0</div></div>
+            <div class="stat-card red"><div class="stat-label">الديون المتبقية</div><div class="stat-value" id="rpDebts">0</div></div>
+            <div class="stat-card red"><div class="stat-label">المصروفات</div><div class="stat-value" id="rpExpenses">0</div></div>
+            <div class="stat-card gold"><div class="stat-label">رأس المال (المخزون)</div><div class="stat-value" id="rpCapital">0</div></div>
+            <div class="stat-card green"><div class="stat-label">الربح الإجمالي</div><div class="stat-value" id="rpGrossProfit">0</div></div>
+            <div class="stat-card green"><div class="stat-label">صافي الربح (بعد المصروفات)</div><div class="stat-value" id="rpNetProfit">0</div></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div class="settings-card">
+                <h3><i class="fas fa-trophy"></i> أفضل المواد مبيعاً (حسب الكمية)</h3>
+                <div class="data-table-wrap">
+                    <table class="pos-table">
+                        <thead><tr><th>#</th><th>المادة</th><th>الكمية المباعة</th><th>إيراد المبيعات</th><th>الربح</th></tr></thead>
+                        <tbody id="rpTopItemsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="settings-card">
+                <h3><i class="fas fa-calendar-alt"></i> المبيعات حسب الأيام (آخر 7 أيام)</h3>
+                <div class="data-table-wrap">
+                    <table class="pos-table">
+                        <thead><tr><th>التاريخ</th><th>عدد الفواتير</th><th>المبيعات</th><th>الربح</th></tr></thead>
+                        <tbody id="rpDailyBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 14. شاشة الإعدادات ================= -->
+    <div class="screen-view" id="screen-settings">
+        <div class="sub-nav-bar">
+            <div class="nav-right">
+                <button class="btn" onclick="goToScreen('screen-home')"><i class="fas fa-arrow-right"></i> رجوع</button>
+                <h3 style="margin:0;"><i class="fas fa-sliders-h"></i> الإعدادات وتخصيص النظام</h3>
+            </div>
+            <div class="nav-left">
+                <button class="btn btn-primary" onclick="saveAllSettings()"><i class="fas fa-save"></i> حفظ كل الإعدادات</button>
+            </div>
+        </div>
+
+        <div class="settings-grid">
+            <!-- بيانات الشركة -->
+            <div class="settings-card">
+                <h3><i class="fas fa-building"></i> بيانات الشركة والفاتورة</h3>
+                <div class="sform-row"><label>اسم الشركة:</label><input type="text" id="setCompanyName"></div>
+                <div class="sform-row"><label>رقم الهاتف الأول:</label><input type="text" id="setPhone1"></div>
+                <div class="sform-row"><label>رقم الهاتف الثاني:</label><input type="text" id="setPhone2"></div>
+                <div class="sform-row"><label>العنوان:</label><input type="text" id="setAddress"></div>
+                <div class="sform-row"><label>الملاحظات أسفل الفاتورة:</label><textarea id="setNotes" rows="2"></textarea></div>
+                <div class="sform-row">
+                    <label>لوكو الشركة (يظهر بالفاتورة):</label>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <div id="setLogoPreview" style="width:70px; height:70px; border:2px dashed #93c5fd; border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#f0f7ff; font-size:11px; color:#64748b;">بدون لوكو</div>
+                        <div>
+                            <input type="file" id="setLogoFile" accept="image/*" style="display:none;" onchange="handleSettingsLogoUpload(this)">
+                            <button class="btn" style="padding:5px 10px; font-size:12px;" onclick="document.getElementById('setLogoFile').click()"><i class="fas fa-image"></i> رفع لوكو</button>
+                            <button class="btn btn-danger" style="padding:5px 10px; font-size:12px;" onclick="removeSettingsLogo()"><i class="fas fa-trash"></i> حذف</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إعدادات الطباعة -->
+            <div class="settings-card">
+                <h3><i class="fas fa-print"></i> إعدادات ورقة الطباعة</h3>
+                <div class="sform-row">
+                    <label>قياس الورق:</label>
+                    <select id="setPaperSize">
+                        <option value="a4">A4</option>
+                        <option value="a5">A5</option>
+                        <option value="thermal80">حراري 80 ملم</option>
+                    </select>
+                </div>
+                <div class="sform-row">
+                    <label>القالب:</label>
+                    <select id="setTemplate">
+                        <option value="classic">كلاسيكي</option>
+                        <option value="modern">حديث</option>
+                        <option value="simple">بسيط</option>
+                        <option value="thermal">إيصال حراري</option>
+                    </select>
+                </div>
+                <div class="sform-row">
+                    <label>حجم الخط: <span id="setFontScaleVal">100%</span></label>
+                    <input type="range" id="setFontScale" min="80" max="130" value="100" style="width:100%;" oninput="document.getElementById('setFontScaleVal').innerText=this.value+'%'">
+                </div>
+                <div class="sform-row">
+                    <label>الهوامش:</label>
+                    <select id="setMargins">
+                        <option value="narrow">ضيقة</option>
+                        <option value="normal">عادية</option>
+                        <option value="wide">واسعة</option>
+                    </select>
+                </div>
+                <div class="sform-row">
+                    <label>العناصر الظاهرة:</label>
+                    <div class="sform-checks">
+                        <label><input type="checkbox" id="setShowLogo"> اللوكو</label>
+                        <label><input type="checkbox" id="setShowCompany"> اسم الشركة</label>
+                        <label><input type="checkbox" id="setShowPhones"> الهواتف</label>
+                        <label><input type="checkbox" id="setShowAddress"> العنوان</label>
+                        <label><input type="checkbox" id="setShowNotes"> الملاحظات</label>
+                        <label><input type="checkbox" id="setShowMeta"> معلومات الفاتورة</label>
+                        <label><input type="checkbox" id="setShowReturnNote"> ملاحظة الإرجاع</label>
+                        <label><input type="checkbox" id="setShowSignature"> التواقيع</label>
+                    </div>
+                </div>
+                <button class="btn btn-success" style="width:100%;" onclick="saveSettingsPrint()"><i class="fas fa-save"></i> حفظ إعدادات الطباعة</button>
+            </div>
+
+            <!-- ألوان الفاتورة -->
+            <div class="settings-card">
+                <h3><i class="fas fa-palette"></i> ألوان الفاتورة</h3>
+                <div class="color-row">
+                    <div class="sform-row"><label>لون البنل العلوي:</label><input type="color" id="setClrTopBg"></div>
+                    <div class="sform-row"><label>لون سطر العناوين:</label><input type="color" id="setClrTitleBg"></div>
+                    <div class="sform-row"><label>لون عناوين الجداول:</label><input type="color" id="setClrHeaders"></div>
+                    <div class="sform-row"><label>لون الإطارات والحدود:</label><input type="color" id="setClrBorder"></div>
+                </div>
+                <div class="sform-row"><label>لون سطر الإجماليات:</label><input type="color" id="setClrFooterBg"></div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-success" style="flex:1;" onclick="saveSettingsColors()"><i class="fas fa-save"></i> حفظ الألوان</button>
+                    <button class="btn" onclick="resetSettingsColors()"><i class="fas fa-undo"></i> استعادة</button>
+                </div>
+            </div>
+
+            <!-- البيانات والنسخ الاحتياطي -->
+            <div class="settings-card">
+                <h3><i class="fas fa-database"></i> البيانات والنسخة الاحتياطية</h3>
+                <p style="font-size:12.5px; color:#64748b;">صدّر كل بياناتك (منتجات، فواتير، أشخاص، إعدادات) كملف، أو استوردها على أي جهاز آخر.</p>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <button class="btn btn-primary" onclick="exportBackupJSON()"><i class="fas fa-download"></i> تصدير نسخة احتياطية</button>
+                    <input type="file" id="setImportFile" accept=".json" style="display:none;" onchange="importBackupJSON(this)">
+                    <button class="btn" onclick="document.getElementById('setImportFile').click()"><i class="fas fa-upload"></i> استيراد نسخة احتياطية</button>
+                    <button class="btn btn-danger" onclick="resetAllData()"><i class="fas fa-trash"></i> حذف كل البيانات وإعادة الضبط</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- ================= MODALS & POPUPS ================= -->
@@ -1745,6 +2038,55 @@
             <div class="win-btn close" onclick="closeModal('modalPrintInvoice')"><i class="fas fa-times"></i></div>
         </div>
         <div class="modal-body" style="background: #f1f5f9;">
+            <!-- شريط خيارات تخصيص الورقة -->
+            <div class="print-toolbar no-print">
+                <div class="ptool">
+                    <label>قياس الورق:</label>
+                    <select id="prtPaperSize" onchange="onPrintSettingChange()">
+                        <option value="a4">A4</option>
+                        <option value="a5">A5</option>
+                        <option value="thermal80">حراري 80 ملم</option>
+                    </select>
+                </div>
+                <div class="ptool">
+                    <label>القالب:</label>
+                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                        <span class="tpl-chip" data-tpl="classic" onclick="setInvoiceTemplate('classic')">كلاسيكي</span>
+                        <span class="tpl-chip" data-tpl="modern" onclick="setInvoiceTemplate('modern')">حديث</span>
+                        <span class="tpl-chip" data-tpl="simple" onclick="setInvoiceTemplate('simple')">بسيط</span>
+                        <span class="tpl-chip" data-tpl="thermal" onclick="setInvoiceTemplate('thermal')">إيصال</span>
+                    </div>
+                </div>
+                <div class="ptool">
+                    <label>حجم الخط: <span id="prtFontScaleVal">100%</span></label>
+                    <input type="range" id="prtFontScale" min="80" max="130" value="100" oninput="onPrintSettingChange()">
+                </div>
+                <div class="ptool">
+                    <label>الهوامش:</label>
+                    <select id="prtMargins" onchange="onPrintSettingChange()">
+                        <option value="narrow">ضيقة</option>
+                        <option value="normal" selected>عادية</option>
+                        <option value="wide">واسعة</option>
+                    </select>
+                </div>
+                <div class="ptool" style="flex:1; min-width:260px;">
+                    <label>العناصر الظاهرة بالورقة:</label>
+                    <div class="ptool-checks">
+                        <label><input type="checkbox" id="prtShowLogo" onchange="onPrintSettingChange()"> اللوكو</label>
+                        <label><input type="checkbox" id="prtShowCompany" onchange="onPrintSettingChange()"> اسم الشركة</label>
+                        <label><input type="checkbox" id="prtShowPhones" onchange="onPrintSettingChange()"> الهواتف</label>
+                        <label><input type="checkbox" id="prtShowAddress" onchange="onPrintSettingChange()"> العنوان</label>
+                        <label><input type="checkbox" id="prtShowNotes" onchange="onPrintSettingChange()"> الملاحظات</label>
+                        <label><input type="checkbox" id="prtShowMeta" onchange="onPrintSettingChange()"> معلومات الفاتورة</label>
+                        <label><input type="checkbox" id="prtShowReturnNote" onchange="onPrintSettingChange()"> ملاحظة الإرجاع</label>
+                        <label><input type="checkbox" id="prtShowSignature" onchange="onPrintSettingChange()"> التواقيع</label>
+                    </div>
+                </div>
+                <div class="ptool">
+                    <button class="btn" style="padding:5px 10px; font-size:12px;" onclick="resetPrintSettings()"><i class="fas fa-undo"></i> استعادة الافتراضي</button>
+                </div>
+            </div>
+
             <div class="invoice-print-container" id="invoice-print-area">
                 <!-- هيدر الفاتورة -->
                 <div class="invoice-header-box">
@@ -1757,7 +2099,7 @@
                 </div>
 
                 <!-- معلومات الفاتورة والزبون -->
-                <div class="invoice-meta-grid">
+                <div class="invoice-meta-grid" id="invPrtMetaGrid">
                     <div>رقم الفاتورة: <span id="invPrtNumber">1</span></div>
                     <div>التاريخ: <span id="invPrtDate">2026-06-12</span></div>
                     <div>نوع البيع: <span id="invPrtSaleType">مفرد</span></div>
@@ -1785,10 +2127,10 @@
                 <!-- ذيل الفاتورة والإجماليات -->
                 <div class="invoice-footer-grid">
                     <div style="display: flex; flex-direction: column; justify-content: space-between;">
-                        <div style="font-size: 12px; font-weight: 600; color: #4b5563;">
+                        <div id="invPrtReturnNote" style="font-size: 12px; font-weight: 600; color: #4b5563;">
                             ملاحظة: البضاعة المباعة لا ترد ولا تستبدل بعد 3 أيام من تاريخ الشراء.
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px 20px; border-top: 1px dashed #cbd5e1; font-weight: 700;">
+                        <div id="invPrtSignatureBox" style="display: flex; justify-content: space-between; padding: 10px 20px; border-top: 1px dashed #cbd5e1; font-weight: 700;">
                             <span>توقيع المستلم: ____________</span>
                             <span>توقيع البائع: ____________</span>
                         </div>
@@ -1968,9 +2310,14 @@
             companyName: 'UMQIRAQ',
             phone1: '07822466147',
             phone2: '07700000000',
-            address: 'العراق / البصرة / أم قصر',
-            notes: 'كل المنتجات جديدة وتخضع لضمان الشركة لمدة سنة كاملة',
-            themes: {
+                address: 'العراق / البصرة / أم قصر',
+                notes: 'كل المنتجات جديدة وتخضع لضمان الشركة لمدة سنة كاملة',
+                print: {
+                    paperSize: 'a4', template: 'classic', fontScale: 100, margins: 'normal',
+                    showLogo: true, showCompany: true, showPhones: true, showAddress: true,
+                    showNotes: true, showMeta: true, showReturnNote: true, showSignature: true
+                },
+                themes: {
                 topBg: '#f5f7fa',
                 titleBg: '#ebf3ff',
                 headers: '#dceeef',
@@ -2026,6 +2373,11 @@
                 topBg: '#f5f7fa', titleBg: '#ebf3ff', headers: '#dceeef',
                 border: '#2875b6', footerBg: '#f5f7fa'
             }, AppState.config.themes || {});
+            AppState.config.print = Object.assign({
+                paperSize: 'a4', template: 'classic', fontScale: 100, margins: 'normal',
+                showLogo: true, showCompany: true, showPhones: true, showAddress: true,
+                showNotes: true, showMeta: true, showReturnNote: true, showSignature: true
+            }, AppState.config.print || {});
         } catch (e) { console.warn('تعذر تحميل البيانات المحفوظة', e); }
     }
 
@@ -2105,6 +2457,7 @@
         document.getElementById('cashierCurrentDate').innerText = new Date().toLocaleDateString('ar-IQ');
         document.getElementById('dailyIncomeDate').value = new Date().toISOString().split('T')[0];
         applyStoredThemes();
+        applyPrintSettings();
         loadPermissions();
         populateCategorySelects();
         renderCashierCategories();
@@ -2135,6 +2488,10 @@
             renderSalesTable();
         } else if (screenId === 'screen-daily-income') {
             renderDailyIncome();
+        } else if (screenId === 'screen-settings') {
+            syncSettingsScreen();
+        } else if (screenId === 'screen-reports') {
+            renderReportsScreen(currentReportPeriod || 'all');
         }
     }
 
@@ -3036,6 +3393,8 @@
         document.getElementById('invPrtPaid').innerText = Number(invoiceData.paid || invoiceData.total).toLocaleString();
         document.getElementById('invPrtRemaining').innerText = Number(invoiceData.remaining || 0).toLocaleString();
 
+        syncPrintToolbar();
+        applyPrintSettings();
         openModal('modalPrintInvoice');
     }
 
@@ -3120,6 +3479,7 @@
         AppState.config.themes.border = document.getElementById('clrBorder').value;
         AppState.config.themes.footerBg = document.getElementById('clrFooterBg').value;
         applyStoredThemes();
+        syncSettingsScreen();
         saveState();
         showNotification('تم حفظ سمات الفاتورة بنجاح!');
     }
@@ -3133,6 +3493,7 @@
             footerBg: '#f5f7fa'
         };
         applyStoredThemes();
+        syncSettingsScreen();
         saveState();
         showNotification('تمت استعادة الألوان الافتراضية');
     }
@@ -3144,6 +3505,333 @@
         root.style.setProperty('--inv-headers', AppState.config.themes.headers);
         root.style.setProperty('--inv-border', AppState.config.themes.border);
         root.style.setProperty('--inv-footer-bg', AppState.config.themes.footerBg);
+    }
+
+    /* ================= تخصيصات ورقة الطباعة (قياسات، قوالب، خيارات) ================= */
+    const PRINT_DEFAULTS = {
+        paperSize: 'a4', template: 'classic', fontScale: 100, margins: 'normal',
+        showLogo: true, showCompany: true, showPhones: true, showAddress: true,
+        showNotes: true, showMeta: true, showReturnNote: true, showSignature: true
+    };
+
+    function getPrintCfg() {
+        return Object.assign({}, PRINT_DEFAULTS, AppState.config.print || {});
+    }
+
+    function applyPrintSettings() {
+        const cfg = getPrintCfg();
+        const area = document.getElementById('invoice-print-area');
+        if (!area) return;
+
+        // القالب + قياس الورق بالمعاينة
+        area.classList.remove('tpl-classic', 'tpl-modern', 'tpl-simple', 'tpl-thermal', 'paper-a4', 'paper-a5', 'paper-thermal80');
+        area.classList.add('tpl-' + cfg.template);
+        area.classList.add('paper-' + cfg.paperSize);
+
+        // حجم الخط
+        document.documentElement.style.setProperty('--inv-font-scale', (Number(cfg.fontScale) || 100) / 100);
+
+        // إظهار/إخفاء العناصر
+        const toggle = (id, show) => { const el = document.getElementById(id); if (el) el.style.display = show ? '' : 'none'; };
+        toggle('invPrtCompany', cfg.showCompany);
+        toggle('invPrtPhones', cfg.showPhones);
+        toggle('invPrtAddress', cfg.showAddress);
+        toggle('invPrtNotes', cfg.showNotes);
+        toggle('invPrtMetaGrid', cfg.showMeta);
+        toggle('invPrtReturnNote', cfg.showReturnNote);
+        toggle('invPrtSignatureBox', cfg.showSignature);
+        const logo = document.getElementById('invPrtLogo');
+        if (logo) logo.style.display = (cfg.showLogo && AppState.config.logo) ? 'block' : 'none';
+
+        // أنماط الطباعة الديناميكية بحسب القياس والهوامش
+        const specs = {
+            a4:        { page: 'A4 portrait', margins: { narrow: '5mm', normal: '10mm', wide: '15mm' }, width: '190mm', pad: { narrow: '4mm 3mm', normal: '8mm 6mm', wide: '12mm 10mm' } },
+            a5:        { page: 'A5 portrait', margins: { narrow: '4mm', normal: '8mm', wide: '12mm' }, width: '130mm', pad: { narrow: '3mm 2mm', normal: '6mm 4mm', wide: '9mm 7mm' } },
+            thermal80: { page: '80mm auto',   margins: { narrow: '0', normal: '0', wide: '0' },       width: '72mm',  pad: { narrow: '1mm', normal: '2mm 3mm', wide: '4mm 5mm' } }
+        };
+        const sp = specs[cfg.paperSize] || specs.a4;
+        const dyn = document.getElementById('dynPrintStyle');
+        if (dyn) {
+            dyn.textContent = `
+                @page { size: ${sp.page}; margin: ${sp.margins[cfg.margins] || sp.margins.normal}; }
+                @page inventoryList { size: A4 portrait; margin: 10mm; }
+                @media print {
+                    #invoice-print-area {
+                        width: ${sp.width} !important; max-width: ${sp.width} !important;
+                        padding: ${sp.pad[cfg.margins] || sp.pad.normal} !important;
+                        margin: 0 auto !important;
+                    }
+                }`;
+        }
+    }
+
+    function syncPrintToolbar() {
+        const cfg = getPrintCfg();
+        const val = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+        const chk = (id, v) => { const el = document.getElementById(id); if (el) el.checked = !!v; };
+        val('prtPaperSize', cfg.paperSize);
+        val('prtFontScale', cfg.fontScale);
+        val('prtMargins', cfg.margins);
+        chk('prtShowLogo', cfg.showLogo);
+        chk('prtShowCompany', cfg.showCompany);
+        chk('prtShowPhones', cfg.showPhones);
+        chk('prtShowAddress', cfg.showAddress);
+        chk('prtShowNotes', cfg.showNotes);
+        chk('prtShowMeta', cfg.showMeta);
+        chk('prtShowReturnNote', cfg.showReturnNote);
+        chk('prtShowSignature', cfg.showSignature);
+        const scaleLbl = document.getElementById('prtFontScaleVal');
+        if (scaleLbl) scaleLbl.innerText = cfg.fontScale + '%';
+        document.querySelectorAll('.tpl-chip').forEach(c => c.classList.toggle('active', c.dataset.tpl === cfg.template));
+    }
+
+    function readPrintToolbar() {
+        const cfg = getPrintCfg();
+        const val = id => (document.getElementById(id)?.value ?? cfg[id]);
+        const chk = id => !!document.getElementById(id)?.checked;
+        cfg.paperSize = val('prtPaperSize');
+        cfg.fontScale = Number(val('prtFontScale')) || 100;
+        cfg.margins = val('prtMargins');
+        cfg.showLogo = chk('prtShowLogo');
+        cfg.showCompany = chk('prtShowCompany');
+        cfg.showPhones = chk('prtShowPhones');
+        cfg.showAddress = chk('prtShowAddress');
+        cfg.showNotes = chk('prtShowNotes');
+        cfg.showMeta = chk('prtShowMeta');
+        cfg.showReturnNote = chk('prtShowReturnNote');
+        cfg.showSignature = chk('prtShowSignature');
+        return cfg;
+    }
+
+    function onPrintSettingChange() {
+        AppState.config.print = readPrintToolbar();
+        const lbl = document.getElementById('prtFontScaleVal');
+        if (lbl) lbl.innerText = AppState.config.print.fontScale + '%';
+        applyPrintSettings();
+        syncSettingsScreen();
+        saveState();
+    }
+
+    function setInvoiceTemplate(tpl) {
+        AppState.config.print = Object.assign(getPrintCfg(), { template: tpl });
+        applyPrintSettings();
+        syncPrintToolbar();
+        syncSettingsScreen();
+        saveState();
+    }
+
+    function resetPrintSettings() {
+        AppState.config.print = Object.assign({}, PRINT_DEFAULTS);
+        applyPrintSettings();
+        syncPrintToolbar();
+        syncSettingsScreen();
+        saveState();
+        showNotification('تمت استعادة إعدادات الطباعة الافتراضية');
+    }
+
+    /* ================= شاشة الإعدادات ================= */
+    function syncSettingsScreen() {
+        const c = AppState.config;
+        const cfg = getPrintCfg();
+        const val = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; };
+        const chk = (id, v) => { const el = document.getElementById(id); if (el) el.checked = !!v; };
+        val('setCompanyName', c.companyName);
+        val('setPhone1', c.phone1);
+        val('setPhone2', c.phone2);
+        val('setAddress', c.address);
+        val('setNotes', c.notes);
+        val('setPaperSize', cfg.paperSize);
+        val('setTemplate', cfg.template);
+        val('setFontScale', cfg.fontScale);
+        val('setMargins', cfg.margins);
+        const sl = document.getElementById('setFontScaleVal');
+        if (sl) sl.innerText = cfg.fontScale + '%';
+        chk('setShowLogo', cfg.showLogo);
+        chk('setShowCompany', cfg.showCompany);
+        chk('setShowPhones', cfg.showPhones);
+        chk('setShowAddress', cfg.showAddress);
+        chk('setShowNotes', cfg.showNotes);
+        chk('setShowMeta', cfg.showMeta);
+        chk('setShowReturnNote', cfg.showReturnNote);
+        chk('setShowSignature', cfg.showSignature);
+        val('setClrTopBg', c.themes.topBg);
+        val('setClrTitleBg', c.themes.titleBg);
+        val('setClrHeaders', c.themes.headers);
+        val('setClrBorder', c.themes.border);
+        val('setClrFooterBg', c.themes.footerBg);
+        const lp = document.getElementById('setLogoPreview');
+        if (lp) lp.innerHTML = c.logo ? `<img src="${c.logo}" style="width:100%; height:100%; object-fit:contain;">` : 'بدون لوكو';
+    }
+
+    function saveSettingsCompany() {
+        AppState.config.companyName = document.getElementById('setCompanyName').value.trim() || 'UMQIRAQ';
+        AppState.config.phone1 = document.getElementById('setPhone1').value.trim();
+        AppState.config.phone2 = document.getElementById('setPhone2').value.trim();
+        AppState.config.address = document.getElementById('setAddress').value.trim();
+        AppState.config.notes = document.getElementById('setNotes').value.trim();
+        // مزامنة حقول الإدارة القديمة
+        const map = { cfgCompanyName: 'companyName', cfgPhone1: 'phone1', cfgPhone2: 'phone2', cfgAddress: 'address', cfgNotes: 'notes' };
+        Object.keys(map).forEach(id => { const el = document.getElementById(id); if (el) el.value = AppState.config[map[id]]; });
+    }
+
+    function saveSettingsPrint() {
+        const cfg = getPrintCfg();
+        const val = id => document.getElementById(id)?.value ?? cfg[id];
+        const chk = id => !!document.getElementById(id)?.checked;
+        AppState.config.print = {
+            paperSize: val('setPaperSize'),
+            template: val('setTemplate'),
+            fontScale: Number(val('setFontScale')) || 100,
+            margins: val('setMargins'),
+            showLogo: chk('setShowLogo'),
+            showCompany: chk('setShowCompany'),
+            showPhones: chk('setShowPhones'),
+            showAddress: chk('setShowAddress'),
+            showNotes: chk('setShowNotes'),
+            showMeta: chk('setShowMeta'),
+            showReturnNote: chk('setShowReturnNote'),
+            showSignature: chk('setShowSignature')
+        };
+        applyPrintSettings();
+        syncPrintToolbar();
+        saveState();
+        showNotification('تم حفظ إعدادات الطباعة بنجاح!');
+    }
+
+    function saveSettingsColors() {
+        AppState.config.themes.topBg = document.getElementById('setClrTopBg').value;
+        AppState.config.themes.titleBg = document.getElementById('setClrTitleBg').value;
+        AppState.config.themes.headers = document.getElementById('setClrHeaders').value;
+        AppState.config.themes.border = document.getElementById('setClrBorder').value;
+        AppState.config.themes.footerBg = document.getElementById('setClrFooterBg').value;
+        applyStoredThemes();
+        syncAdminThemeInputs();
+        saveState();
+        showNotification('تم حفظ ألوان الفاتورة بنجاح!');
+    }
+
+    function resetSettingsColors() {
+        AppState.config.themes = { topBg: '#f5f7fa', titleBg: '#ebf3ff', headers: '#dceeef', border: '#2875b6', footerBg: '#f5f7fa' };
+        applyStoredThemes();
+        syncSettingsScreen();
+        syncAdminThemeInputs();
+        saveState();
+    }
+
+    function syncAdminThemeInputs() {
+        const map = { clrTopBg: 'topBg', clrTitleBg: 'titleBg', clrHeaders: 'headers', clrBorder: 'border', clrFooterBg: 'footerBg' };
+        Object.keys(map).forEach(id => { const el = document.getElementById(id); if (el) el.value = AppState.config.themes[map[id]]; });
+    }
+
+    function handleSettingsLogoUpload(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                AppState.config.logo = e.target.result;
+                syncSettingsScreen();
+                saveState();
+                showNotification('تم رفع اللوكو بنجاح!');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function removeSettingsLogo() {
+        AppState.config.logo = '';
+        syncSettingsScreen();
+        saveState();
+    }
+
+    function saveAllSettings() {
+        saveSettingsCompany();
+        saveSettingsPrint();
+        saveSettingsColors();
+        saveState();
+        showNotification('تم حفظ كل الإعدادات بنجاح!');
+    }
+
+    /* ================= شاشة الأرباح والتقارير ================= */
+    let currentReportPeriod = 'all';
+
+    function salesInPeriod(period) {
+        if (period === 'all') return AppState.sales;
+        const now = new Date();
+        let start = new Date(now);
+        if (period === 'today') start.setHours(0, 0, 0, 0);
+        else if (period === 'week') { start.setDate(now.getDate() - 6); start.setHours(0, 0, 0, 0); }
+        else if (period === 'month') { start.setDate(now.getDate() - 29); start.setHours(0, 0, 0, 0); }
+        return AppState.sales.filter(s => {
+            const d = new Date(String(s.date || '').replace(' ', 'T'));
+            return !isNaN(d) && d >= start;
+        });
+    }
+
+    function salesProfit(sale) {
+        let p = 0;
+        (sale.items || []).forEach(it => { p += (it.total - ((it.buyPrice || 0) * it.qty)); });
+        return p;
+    }
+
+    function renderReportsScreen(period) {
+        currentReportPeriod = period || currentReportPeriod;
+        document.querySelectorAll('#screen-reports .period-tab').forEach(b => b.classList.remove('active'));
+        const tabs = { today: 0, week: 1, month: 2, all: 3 };
+        const activeBtn = document.querySelectorAll('#screen-reports .period-tab')[tabs[currentReportPeriod]];
+        if (activeBtn) activeBtn.classList.add('active');
+
+        const sales = salesInPeriod(currentReportPeriod);
+        let totalSales = 0, totalCash = 0, debts = 0, grossProfit = 0;
+        sales.forEach(s => {
+            totalSales += s.total;
+            if (s.payType === 'كاش') totalCash += s.total;
+            debts += s.remaining;
+            grossProfit += salesProfit(s);
+        });
+
+        let totalExpenses = 0;
+        AppState.expenses.forEach(ex => totalExpenses += ex.amount);
+        let capital = 0;
+        AppState.products.forEach(p => capital += (p.buyPrice * p.qty));
+
+        const fmt = n => Number(n).toLocaleString() + ' د.ع';
+        document.getElementById('rpInvCount').innerText = sales.length;
+        document.getElementById('rpTotalSales').innerText = fmt(totalSales);
+        document.getElementById('rpTotalCash').innerText = fmt(totalCash);
+        document.getElementById('rpDebts').innerText = fmt(debts);
+        document.getElementById('rpExpenses').innerText = fmt(totalExpenses);
+        document.getElementById('rpCapital').innerText = fmt(capital);
+        document.getElementById('rpGrossProfit').innerText = fmt(grossProfit);
+        document.getElementById('rpNetProfit').innerText = fmt(grossProfit - totalExpenses);
+
+        // أفضل المواد مبيعاً
+        const agg = {};
+        sales.forEach(s => (s.items || []).forEach(it => {
+            const k = it.name;
+            if (!agg[k]) agg[k] = { name: k, qty: 0, revenue: 0, profit: 0 };
+            agg[k].qty += it.qty;
+            agg[k].revenue += it.total;
+            agg[k].profit += it.total - ((it.buyPrice || 0) * it.qty);
+        }));
+        const top = Object.values(agg).sort((a, b) => b.qty - a.qty).slice(0, 10);
+        const topBody = document.getElementById('rpTopItemsBody');
+        topBody.innerHTML = top.length ? '' : '<tr><td colspan="5" style="text-align:center; color:#64748b;">لا توجد مبيعات بهذه الفترة</td></tr>';
+        top.forEach((t, i) => {
+            topBody.innerHTML += `<tr><td>${i + 1}</td><td><strong>${t.name}</strong></td><td>${t.qty}</td><td>${Number(t.revenue).toLocaleString()}</td><td style="color:#15803d; font-weight:700;">${Number(t.profit).toLocaleString()}</td></tr>`;
+        });
+
+        // المبيعات حسب آخر 7 أيام
+        const dailyBody = document.getElementById('rpDailyBody');
+        dailyBody.innerHTML = '';
+        for (let i = 6; i >= 0; i--) {
+            const day = new Date();
+            day.setHours(0, 0, 0, 0);
+            day.setDate(day.getDate() - i);
+            const key = day.toISOString().split('T')[0];
+            const daySales = AppState.sales.filter(s => String(s.date || '').startsWith(key));
+            let dTotal = 0, dProfit = 0;
+            daySales.forEach(s => { dTotal += s.total; dProfit += salesProfit(s); });
+            dailyBody.innerHTML += `<tr><td>${key}</td><td>${daySales.length}</td><td>${Number(dTotal).toLocaleString()}</td><td style="color:#15803d; font-weight:700;">${Number(dProfit).toLocaleString()}</td></tr>`;
+        }
     }
 
     function renderUsersTable() {
